@@ -1,9 +1,9 @@
 // Módulo do complemento de 2 de 8bits 
 
 module complementoDe2_8bits (
-	 input  wire [15:0] A,
+	input  wire [7:0] A,
     input  wire        bs,   // 1 = aplicar complemento, 0 = passar direto
-    output wire [15:0] saida
+	output wire [7:0] saida
 );
     wire [7:0] notA, carry, out;
 	 
