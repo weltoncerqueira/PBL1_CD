@@ -18,14 +18,14 @@ module complementoDe2_8bits (
     not (notA[7], A[7]);
     
     // Somar +1 ao número invertido 
-	 full_adder fa1 (.A(notA[0]), .B(1'b1), .cin(1'b0),     .S(out[0]), .cout(carry[0]) );
-	 full_adder fa2 (.A(notA[1]), .B(1'b0), .cin(carry[0]), .S(out[1]), .cout(carry[1]) );
-	 full_adder fa3 (.A(notA[2]), .B(1'b0), .cin(carry[1]), .S(out[2]), .cout(carry[2]) );
-	 full_adder fa4 (.A(notA[3]), .B(1'b0), .cin(carry[2]), .S(out[3]), .cout(carry[3]) );
-	 full_adder fa5 (.A(notA[4]), .B(1'b0), .cin(carry[3]), .S(out[4]), .cout(carry[4]) );
-	 full_adder fa6 (.A(notA[5]), .B(1'b0), .cin(carry[4]), .S(out[5]), .cout(carry[5]) );
-	 full_adder fa7 (.A(notA[6]), .B(1'b0), .cin(carry[5]), .S(out[6]), .cout(carry[6]) );
-	 full_adder fa8 (.A(notA[7]), .B(1'b0), .cin(carry[6]), .S(out[7]), .cout(carry[7]) );
+	 somador_completo fa1 (.A(notA[0]), .B(1'b1), .cin(1'b0),     .S(out[0]), .cout(carry[0]) );
+	 somador_completo fa2 (.A(notA[1]), .B(1'b0), .cin(carry[0]), .S(out[1]), .cout(carry[1]) );
+	 somador_completo fa3 (.A(notA[2]), .B(1'b0), .cin(carry[1]), .S(out[2]), .cout(carry[2]) );
+	 somador_completo fa4 (.A(notA[3]), .B(1'b0), .cin(carry[2]), .S(out[3]), .cout(carry[3]) );
+	 somador_completo fa5 (.A(notA[4]), .B(1'b0), .cin(carry[3]), .S(out[4]), .cout(carry[4]) );
+	 somador_completo fa6 (.A(notA[5]), .B(1'b0), .cin(carry[4]), .S(out[5]), .cout(carry[5]) );
+	 somador_completo fa7 (.A(notA[6]), .B(1'b0), .cin(carry[5]), .S(out[6]), .cout(carry[6]) );
+	 somador_completo fa8 (.A(notA[7]), .B(1'b0), .cin(carry[6]), .S(out[7]), .cout(carry[7]) );
 	 
 	 // Se negativo, usa complemento; senão, usa original
     mux_2x1_8bits mux_resultado (
