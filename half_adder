@@ -1,0 +1,13 @@
+module half_adder (
+
+	input wire A,
+	input wire B,
+	output wire cout,
+	output wire sum
+	
+	);
+	
+	xor (sum, a, b); 
+	and (cout, a, b);
+	
+endmodule
