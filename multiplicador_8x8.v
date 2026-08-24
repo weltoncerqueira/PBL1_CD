@@ -1,6 +1,6 @@
 // Módulo multiplicador 8x8
 
-module multiplier_8x8 (
+module multiplicador_8x8 (
     input  wire [7:0] A,
     input  wire [7:0] B,
     output wire [15:0] S
