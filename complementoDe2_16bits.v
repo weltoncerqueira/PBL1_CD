@@ -29,22 +29,22 @@ module complementoDe2_16bits (
     not n15(notA[15], A[15]);
     
     // Soma 1 ao inverso
-    full_adder fa0 (.A(notA[0]),  .B(1'b1), .cin(1'b0),      .cout(carry[0]),  .S(complemento[0]));
-    full_adder fa1 (.A(notA[1]),  .B(1'b0), .cin(carry[0]),  .cout(carry[1]),  .S(complemento[1]));
-    full_adder fa2 (.A(notA[2]),  .B(1'b0), .cin(carry[1]),  .cout(carry[2]),  .S(complemento[2]));
-    full_adder fa3 (.A(notA[3]),  .B(1'b0), .cin(carry[2]),  .cout(carry[3]),  .S(complemento[3]));
-    full_adder fa4 (.A(notA[4]),  .B(1'b0), .cin(carry[3]),  .cout(carry[4]),  .S(complemento[4]));
-    full_adder fa5 (.A(notA[5]),  .B(1'b0), .cin(carry[4]),  .cout(carry[5]),  .S(complemento[5]));
-    full_adder fa6 (.A(notA[6]),  .B(1'b0), .cin(carry[5]),  .cout(carry[6]),  .S(complemento[6]));
-    full_adder fa7 (.A(notA[7]),  .B(1'b0), .cin(carry[6]),  .cout(carry[7]),  .S(complemento[7]));
-    full_adder fa8 (.A(notA[8]),  .B(1'b0), .cin(carry[7]),  .cout(carry[8]),  .S(complemento[8]));
-    full_adder fa9 (.A(notA[9]),  .B(1'b0), .cin(carry[8]),  .cout(carry[9]),  .S(complemento[9]));
-    full_adder fa10(.A(notA[10]), .B(1'b0), .cin(carry[9]),  .cout(carry[10]), .S(complemento[10]));
-    full_adder fa11(.A(notA[11]), .B(1'b0), .cin(carry[10]), .cout(carry[11]), .S(complemento[11]));
-    full_adder fa12(.A(notA[12]), .B(1'b0), .cin(carry[11]), .cout(carry[12]), .S(complemento[12]));
-    full_adder fa13(.A(notA[13]), .B(1'b0), .cin(carry[12]), .cout(carry[13]), .S(complemento[13]));
-    full_adder fa14(.A(notA[14]), .B(1'b0), .cin(carry[13]), .cout(carry[14]), .S(complemento[14]));
-    full_adder fa15(.A(notA[15]), .B(1'b0), .cin(carry[14]), .cout(carry[15]), .S(complemento[15]));
+    somador_completo fa0 (.A(notA[0]),  .B(1'b1), .cin(1'b0),      .cout(carry[0]),  .S(complemento[0]));
+    somador_completo fa1 (.A(notA[1]),  .B(1'b0), .cin(carry[0]),  .cout(carry[1]),  .S(complemento[1]));
+    somador_completo fa2 (.A(notA[2]),  .B(1'b0), .cin(carry[1]),  .cout(carry[2]),  .S(complemento[2]));
+    somador_completo fa3 (.A(notA[3]),  .B(1'b0), .cin(carry[2]),  .cout(carry[3]),  .S(complemento[3]));
+    somador_completo fa4 (.A(notA[4]),  .B(1'b0), .cin(carry[3]),  .cout(carry[4]),  .S(complemento[4]));
+    somador_completo fa5 (.A(notA[5]),  .B(1'b0), .cin(carry[4]),  .cout(carry[5]),  .S(complemento[5]));
+    somador_completo fa6 (.A(notA[6]),  .B(1'b0), .cin(carry[5]),  .cout(carry[6]),  .S(complemento[6]));
+    somador_completo fa7 (.A(notA[7]),  .B(1'b0), .cin(carry[6]),  .cout(carry[7]),  .S(complemento[7]));
+    somador_completo fa8 (.A(notA[8]),  .B(1'b0), .cin(carry[7]),  .cout(carry[8]),  .S(complemento[8]));
+    somador_completo fa9 (.A(notA[9]),  .B(1'b0), .cin(carry[8]),  .cout(carry[9]),  .S(complemento[9]));
+    somador_completo fa10(.A(notA[10]), .B(1'b0), .cin(carry[9]),  .cout(carry[10]), .S(complemento[10]));
+    somador_completo fa11(.A(notA[11]), .B(1'b0), .cin(carry[10]), .cout(carry[11]), .S(complemento[11]));
+    somador_completo fa12(.A(notA[12]), .B(1'b0), .cin(carry[11]), .cout(carry[12]), .S(complemento[12]));
+    somador_completo fa13(.A(notA[13]), .B(1'b0), .cin(carry[12]), .cout(carry[13]), .S(complemento[13]));
+    somador_completo fa14(.A(notA[14]), .B(1'b0), .cin(carry[13]), .cout(carry[14]), .S(complemento[14]));
+    somador_completo fa15(.A(notA[15]), .B(1'b0), .cin(carry[14]), .cout(carry[15]), .S(complemento[15]));
     
     // Se negativo, usa complemento; senão, usa original
     mux_2x1_16bits mux_resultado (
