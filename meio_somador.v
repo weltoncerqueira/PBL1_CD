@@ -5,9 +5,9 @@ module meio_somador (
 	output wire cout,
 	output wire sum
 	
-	);
-	
-	xor (sum, a, b); 
-	and (cout, a, b);
-	
-endmodule
+);
+
+	xor (sum, A, B);
+	and (cout, A, B);
+
+endmodule 
