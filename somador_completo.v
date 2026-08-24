@@ -1,4 +1,4 @@
-module full_adder (
+module somador_completo (
     input  wire A,
     input  wire B,
     input  wire cin,
