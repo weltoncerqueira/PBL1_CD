@@ -1,7 +1,7 @@
 // adder_16bits.v
 // Função: Soma dois números de 16 bits
 
-module adder_16bits (
+module somador_16bits (
     input  wire [15:0] a,      // Primeiro número (16 bits)
     input  wire [15:0] b,      // Segundo número (16 bits)
     input  wire        cin,    // Carry de entrada (geralmente 0)
