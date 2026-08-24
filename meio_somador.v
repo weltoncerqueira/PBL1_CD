@@ -1,4 +1,4 @@
-module half_adder (
+module meio_somador (
 
 	input wire A,
 	input wire B,
