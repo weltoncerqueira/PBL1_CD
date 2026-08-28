@@ -15,12 +15,12 @@ module multiplicador_sinalizado_8x8 (
 	valor_absoluto  abs_a_inst( .entrada(a), .valor_absoluto(vbs_a));
 	valor_absoluto  abs_b_inst( .entrada(b), .valor_absoluto(vbs_b));
 	
-	// Detecta os sinais
-	detector_sinal detector_a ( .numero(a), .bs(bs1) );
-	detector_sinal detector_b ( .numero(b), .bs(bs2) );
+	// Captura os sinais
+	assign bs1 = a[7];
+	assign bs2 = b[7];
 	
 	// Multiplica os valores absolutos
-	multiplier_8x8 (
+	multiplicador_8x8 mult_inst(
 		.A(vbs_a),
 		.B(vbs_b),
 		.S(produto)
@@ -41,4 +41,3 @@ module multiplicador_sinalizado_8x8 (
 			
 
 endmodule
-
