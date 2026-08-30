@@ -1,60 +1,47 @@
-
 module equacao_completa (
     input  wire [7:0]  x,
-    output wire [15:0] y,
-	 
-	 output wire [6:0] dig_centena,	
-	 output wire [6:0] dig_dezena,
-	 output wire [6:0] dig_unidade,
-	 output wire		  sinal_negativo,
+    input  wire [1:0]  sel_hex_dec,
+
+    output wire [6:0]  display0, display1, display2, display3, display4,
     output wire        overflow,
     output wire        zero,
     output wire        cout,
     output wire        erro
-	 				
- 
 );
+
     // --- Sinais internos ---
     wire [15:0] x_quadrado;
     wire [15:0] cinco_x;
-    wire [15:0] menos_cinco_x;
     wire [15:0] soma1;
     wire [15:0] soma2;
-	 
-    wire        cout1, cout2;
-    wire        ov1, ov2;
-    
+
+    wire cout1, cout2;
+    wire ov1, ov2;
+
     // Multiplicação x²
-    multiplicador_sinalizado_8x8 multp1 (
-        .a(x),
-        .b(x),
-        .saida_final(x_quadrado)  
+    multiplicador_8x8_sinalizado multp1 (
+        .A(x),
+        .B(x),
+        .S(x_quadrado)
     );
 
-    // Multiplicação 5x
-    multiplicador_sinalizado_8x8 multp2 (
-        .a(x),
-        .b(8'd5),
-        .saida_final(cinco_x)  
+    // Multiplicação (-5)*x
+    multiplicador_8x8_sinalizado multp2 (
+        .A(x),
+        .B(8'hFB), // -5 em complemento de 2
+        .S(cinco_x)
     );
-    
-    // Calcula -5x = complemento de 2 de 5x
-    complementoDe2_16bits neg_5x (
-        .A(cinco_x),
-        .bs(1'b1),         // SEMPRE negativo (força complemento)
-        .out(menos_cinco_x)
-    );
-    
+
     // Soma x² + (-5x)
     somador_16bits somador1 (
         .a(x_quadrado),
-        .b(menos_cinco_x),
+        .b(cinco_x),
         .cin(1'b0),
         .sum(soma1),
         .cout(cout1),
-        .overflow(ov1) // Overflow da primeira soma
+        .overflow(ov1)
     );
-    
+
     // Soma +6
     somador_16bits somador2 (
         .a(soma1),
@@ -62,39 +49,39 @@ module equacao_completa (
         .cin(1'b0),
         .sum(soma2),
         .cout(cout2),
-        .overflow(ov2) // Overflow da segunda soma
+        .overflow(ov2)
     );
-    
-	 
-	 //--- Tratamento do resultado soma2 para o display de 7 segmentos
-	 wire [15:0] v_absoluto;
-	 wire [3:0] unidade, dezena, centena;
-	 
-	 //Pega o sinal do número negativo para representar no display
-	 assign sinal_negativo = soma2[15];
-	 
-	 //Verifica se o número é negativo, e se for, converte de volta 
-	 valor_absoluto_16bits  abs_inst16bit ( .entrada(soma2), .valor_absoluto(v_absoluto));
-	 
-	 //Converte o valor binário em casas decimais
-	 bin_pra_decimal bin_dec_1(
-		.valor_bin(v_absoluto),
-		.centena(centena),
-		.dezena(dezena),
-		.unidade(unidade)
-		);
-		
-	  //Representa os valores no display de 7 segmentos		
-	  bcd_to_7seg bcd1 ( .bcd(centena),  .seg(dig_centena));
-	  bcd_to_7seg bcd2 ( .bcd(dezena),  .seg(dig_dezena));
-	  bcd_to_7seg bcd3 ( .bcd(unidade), .seg(dig_unidade));
-	  
-		
-	  // --- Saídas dos leds
-	  
-     assign cout = cout2;                  // LEDR[2] - Carry da última soma
-     assign zero = (soma2 == 16'b0);       // LEDR[1] - Resultado é ZERO?
-     assign overflow = ov1 | ov2;          // LEDR[0] - Overflow em qualquer soma
-     assign erro = 1'b0;                   // LEDR[3] - Sem erro nesta implementação
 
-endmodule 
+    // Seleção de display
+    wire erro__chaves_11;
+    seletor_hexa_dec_to7seg segmentos7 (
+        .somaFinal(soma2),
+        .sel(sel_hex_dec),
+        .display4(display4),
+        .display3(display3),
+        .display2(display2),
+        .display1(display1),
+        .display0(display0),
+        .erro(erro__chaves_11)
+    );
+
+    // overflow = ov1 | ov2
+    or (overflow, ov1, ov2);
+
+    // cout = cout2 & ~overflow
+    wire n_overflow;
+    not (n_overflow, overflow);
+    and (cout, cout2, n_overflow);
+
+    // zero = 1 quando soma2 == 0 (NOR de todos os bits)
+    nor (zero,
+        soma2[0],  soma2[1],  soma2[2],  soma2[3],
+        soma2[4],  soma2[5],  soma2[6],  soma2[7],
+        soma2[8],  soma2[9],  soma2[10], soma2[11],
+        soma2[12], soma2[13], soma2[14], soma2[15]
+    );
+
+    // erro vindo do seletor
+    buf (erro, erro__chaves_11);
+
+endmodule

@@ -6,15 +6,13 @@ module valor_absoluto_16bits (
     output wire [15:0] valor_absoluto
 );
     wire bs;
-    
-    // captura o bit de sinal
-    assign bs = entrada[15];
-    
-    // Calcula o complemento de 2 e verifica se usa o complemento ou não
+
+    buf b1 (bs, entrada[15]);
+
     complementoDe2_16bits complemento_16bit (
-	 .A(entrada), 
-	 .bs(bs),
-	 .out(valor_absoluto)
-	 );
-	 
+        .A(entrada),
+        .bs(bs),
+        .out(valor_absoluto)
+    );
+
 endmodule

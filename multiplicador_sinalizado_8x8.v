@@ -1,43 +1,31 @@
-// multiplicador_sinalizado_8x8.v
-// Função: Multiplica dois números de 8 bits com sinal usando multiplicador sem sinal
 
-module multiplicador_sinalizado_8x8 (
-    input  wire [7:0] a,         
-    input  wire [7:0] b,         
-    output wire [15:0] saida_final 
+module multiplicador_8x8_sinalizado (
+    input  wire [7:0] A,
+    input  wire [7:0] B,
+    output wire [15:0] S
 );
 
-	wire [15:0] produto;
-	wire [7:0] vbs_a, vbs_b;
-	wire bs1, bs2, resultado_bs;
-	
-	// Calcula os valores absolutos
-	valor_absoluto  abs_a_inst( .entrada(a), .valor_absoluto(vbs_a));
-	valor_absoluto  abs_b_inst( .entrada(b), .valor_absoluto(vbs_b));
-	
-	// Captura os sinais
-	assign bs1 = a[7];
-	assign bs2 = b[7];
-	
-	// Multiplica os valores absolutos
-	multiplicador_8x8 mult_inst(
-		.A(vbs_a),
-		.B(vbs_b),
-		.S(produto)
-		);
-		
-	// Determina o sinal do resultado
-   // Regra: sinais iguais → positivo (0), sinais diferentes → negativo (1)
-   assign resultado_bs = bs1 ^ bs2;  // XOR
-	
-	// Calcula complemento de 2 para 16 bits
-	// Se resultado for negativo, usa o complemento
-	// Se resultado for positivo, passa direto
-	complementoDe2_16bits comp_result (
-        .A(produto),
-		  .bs(resultado_bs),
-		  .out(saida_final)  
+    wire [7:0] A_abs, B_abs;
+    wire [15:0] P_mag;
+    wire sinal;
+	 
+
+    // fluxo normal
+    xor (sinal, A[7], B[7]);
+
+    valor_absoluto va (.entrada(A), .valor_absoluto(A_abs));
+    valor_absoluto vb (.entrada(B), .valor_absoluto(B_abs));
+
+    multiplicador_8x8 mul_u (
+        .A(A_abs),
+        .B(B_abs),
+        .S(P_mag)
     );
-			
+
+    complementoDe2_16bits comp16 (
+        .A(P_mag),
+        .bs(sinal),
+        .out(S)
+    );
 
 endmodule
