@@ -3,6 +3,7 @@ module equacao_completa (
     input  wire [1:0]  sel_hex_dec,
 
     output wire [6:0]  display0, display1, display2, display3, display4,
+	 output wire led4, led5, led6, led7, led8, led9,
     output wire        overflow,
     output wire        zero,
     output wire        cout,
@@ -83,5 +84,14 @@ module equacao_completa (
 
     // erro vindo do seletor
     buf (erro, erro__chaves_11);
+	 
+	 
+	 //Saida de outros leds (Sempre apagado)
+	 assign led4 = 1'b0;
+	 assign led5 = 1'b0;
+	 assign led6 = 1'b0;
+	 assign led7 = 1'b0;
+	 assign led8 = 1'b0;
+	 assign led9 = 1'b0;
 
 endmodule
