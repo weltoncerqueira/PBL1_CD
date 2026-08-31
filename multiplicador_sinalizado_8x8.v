@@ -10,7 +10,7 @@ module multiplicador_8x8_sinalizado (
     wire sinal;
 	 
 
-    // fluxo normal
+    // Sinais iguais = 0, Sinais diferentes = 1
     xor (sinal, A[7], B[7]);
 
     valor_absoluto va (.entrada(A), .valor_absoluto(A_abs));
